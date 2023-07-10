@@ -2,7 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/')   # Это главная страница сайта
 @app.route('/index')
 def index():
     return 'Hello'
