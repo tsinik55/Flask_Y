@@ -2,10 +2,12 @@ from flask import Flask, url_for, request
 
 app = Flask(__name__)
 
-@app.route('/')   # Это главная страница сайта
+
+@app.route('/')  # Это главная страница сайта
 @app.route('/index')
 def index():
     return 'Адмирал<br><a href ="/slogan">slogan</a>'
+
 
 @app.route('/poster')
 def poster():
@@ -35,10 +37,10 @@ alt="Здесь должна была быть картинка, но не на�
 </html>
 """
 
+
 @app.route('/slogan')
 def slogan():
     return 'какая то цитата<br><a href ="/">Назад</a>'
-
 
 
 @app.route('/countdown')
@@ -46,6 +48,7 @@ def countdown():
     lst = [str(x) for x in range(10, 0, -1)]
     lst.append('Start!!!')
     return '<br>'.join(lst)
+
 
 @app.route('/greeting/<username>')
 def freeting(username):
@@ -108,6 +111,7 @@ alt="Здесь должна была быть картинка, но не на�
 </body>
 </html>
 """
+
 
 @app.route('/variants/<int:var>')
 def variants(var):
@@ -173,7 +177,8 @@ def variants(var):
     else:
         return " не знаю о чем вы"
 
-@app.route('/slideshow')    # карусель
+
+@app.route('/slideshow')  # карусель
 def slideshow():
     return f"""<!DOCTYPE html>
 
@@ -275,9 +280,10 @@ def slideshow():
     </html>
     """
 
-@app.route('/form_sample', methods=['GET','POST'])
+
+@app.route('/form_sample', methods=['GET', 'POST'])
 def form_sample():
-    if request.method=='GET':
+    if request.method == 'GET':
         return f"""<!DOCTYPE html>
 
         <html lang="en">
