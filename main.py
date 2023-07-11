@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')  # Это главная страница сайта
 @app.route('/index')
 def index():
-    return 'Адмирал<br><a href ="/slogan">slogan</a>'
+    return 'Admiral<br><a href ="/slogan">slogan</a>'
 
 
 @app.route('/poster')
@@ -16,12 +16,12 @@ def poster():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Постер</title>
+    <title>Poster</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" type= "text/css" href="{url_for('static', filename='css/style.css')}">
 </head>
 <body>
-<h1 class="red">Постер к фильму</h1>
+<h1 class="red">Film poster</h1>
 
 <img height ="429" width="417" src="{url_for('static', filename='images/admiral1.png')}"
 alt="Здесь должна была быть картинка, но не нашлась">
@@ -259,11 +259,11 @@ def slideshow():
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Предыдущий</span>
+    <span class="sr-only">Previous</span>
   </a>
   <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Следующий</span>
+    <span class="sr-only">Next</span>
   </a>
 </div>
     </div>
@@ -289,28 +289,57 @@ def form_sample():
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <title>Пример формы</title>
+            <title>Form Example</title>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
             <link rel="stylesheet" type= "text/css" href="{url_for('static', filename='css/style.css')}">
         </head>
         <body>
-        <h1> Форма для регистрации </h1>
+        <h1> Registration Form </h1>
          <div class="container">
          <form class="login_form" method="post">
          
-         <input type="text" class="form-control" name="fname"  placeholder="Имя">
-          <input type="text" class="form-control" name="sname"  placeholder="Фамилия"><br>
+         <input type="text" class="form-control" name="fname"  placeholder="First name">
+          <input type="text" class="form-control" name="sname"  placeholder="Last name"><br>
           <input type="email" class="form-control" name="email" placeholder="name@example.com">
           <input type="password" class="form-control" name="password" placeholder="Password">
           <div class="form-group">
-          <label form="classSelect">Ваше образование</label>
+          <label form="classSelect">Select your education</label>
           <select class= "form-control" id="classSelect" name="profession">
-                <option selected>Высшее</option>
-                <option>Среднее</option>
+                <option selected>High School</option>
+                <option>Middle School</option>
           </div>
-         <button class="btn btn-primary" type="submit">Отправить</button>
+         <button class="btn btn-primary" type="submit">Submit</button>
           </form>
-         
+        
+        </select>
+        </div>
+        <! -- Radio button - Gender selection ->
+        <div class = "form group">
+            <label for="form-check">Select your gender</label> 
+            <div class="form-check">
+                <input class = "form-check-input" type = "radio" name="sex" id="male" value="male" checked>
+                <label class = "form-check-label" type = for "male">Male</label>
+            </div>
+            <div class="form-check">
+                <input class = "form-check-input" type = "radio" name="sex" id="female" value="female" checked>
+                <label class = "form-check-label" type = for "female">Female</label>
+            </div>
+        </div>
+        <! -- End og gender selection -- >
+        <! -- Text block -- >
+        <div>
+            <label for="Information</label>
+            <textarea class="form-control" id="about" name="about" rows="3"</textarea>
+        </div><br>
+        <! -- End of text block -- >
+        <! -- Checkbox -- >
+        <div>
+            
+        
+        
+        
+        
+            
         
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
@@ -322,7 +351,7 @@ def form_sample():
         print(request.form['sname'])
         print(request.form['email'])
         print(request.form['password"'])
-        return ('Форма отправлена')
+        return 'The form is sent'
 
 
 if __name__ == '__main__':
