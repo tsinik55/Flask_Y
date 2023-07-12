@@ -1,4 +1,7 @@
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, redirect
+from flask import render_template
+import json
+
 
 app = Flask(__name__)
 
@@ -6,37 +9,32 @@ app = Flask(__name__)
 @app.route('/')  # Это главная страница сайта
 @app.route('/index')
 def index():
-    return 'Admiral<br><a href ="/slogan">slogan</a>'
+    #- старый метод
+    #user = "Слушатель"
+    # redirect('/load_photo')  безусловный редирект, перекидывает сразу на эту форму
+   # return render_template('index.html', title='Работа с шаблонами',username=user)
+    param= {}
+    param['username'] = 'Ученик'
+    param['title'] = 'Раширяем шаблоны'
+    return render_template('index.html', **param)
 
 
-@app.route('/poster')
-def poster():
-    return f"""<!DOCTYPE html>
-    
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Poster</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" type= "text/css" href="{url_for('static', filename='css/style.css')}">
-</head>
-<body>
-<h1 class="red">Film poster</h1>
+@app.route('/odd_even')
+def odd_even():
+    return render_template('odd_even.html', number=2)
 
-<img height ="429" width="417" src="{url_for('static', filename='images/admiral1.png')}"
-alt="Здесь должна была быть картинка, но не нашлась">
-<p>И крепка, как смерть, любовь</p>
-<p class="text-primary">.text-primary</p>
-<p class="text-secondary">.text-secondary</p>
-<p class="text-success">.text-success</p>
-<p class="text-danger">.text-danger</p>
+@app.route('/news')
+def news():
+    with open('news.json', 'rt', encoding='utf-8') as f:
+        news_list = json.loads(f.read())
+    return render_template('news.html', title='Новости',
+                            news=news_list )
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-</body>
-</html>
-"""
 
+
+@app.route('/var_test')
+def var_test():
+    return  render_template('var_test.html', title='Переменные в HTML')
 
 @app.route('/slogan')
 def slogan():
@@ -50,26 +48,7 @@ def countdown():
     return '<br>'.join(lst)
 
 
-@app.route('/greeting/<username>')
-def freeting(username):
-    return f"""<!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{username}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" type= "text/css" href="{url_for('static', filename='css/style.css')}">
-</head>
-<body>
-<h1 >Привет, {username}</h1>
-
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-</body>
-</html>
-"""
 
 
 @app.route('/nekrasov')
@@ -259,11 +238,11 @@ def slideshow():
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
+    <span class="sr-only">Предыдущий</span>
   </a>
   <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
+    <span class="sr-only">Следующий</span>
   </a>
 </div>
     </div>
@@ -284,75 +263,47 @@ def slideshow():
 @app.route('/form_sample', methods=['GET', 'POST'])
 def form_sample():
     if request.method == 'GET':
-        return f"""<!DOCTYPE html>
-
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>Form Example</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-            <link rel="stylesheet" type= "text/css" href="{url_for('static', filename='css/style.css')}">
-        </head>
-        <body>
-        <h1> Registration Form </h1>
-         <div class="container">
-         <form class="login_form" method="post">
-         
-         <input type="text" class="form-control" name="fname"  placeholder="First name">
-          <input type="text" class="form-control" name="sname"  placeholder="Last name"><br>
-          <input type="email" class="form-control" name="email" placeholder="name@example.com">
-          <input type="password" class="form-control" name="password" placeholder="Password">
-          <div class="form-group">
-          <label form="classSelect">Select your education</label>
-          <select class= "form-control" id="classSelect" name="profession">
-                <option selected>High School</option>
-                <option>Middle School</option>
-          </div>
-         <button class="btn btn-primary" type="submit">Submit</button>
-          </form>
-        
-        </select>
-        </div>
-        <! -- Radio button - Gender selection ->
-        <div class = "form group">
-            <label for="form-check">Select your gender</label> 
-            <div class="form-check">
-                <input class = "form-check-input" type = "radio" name="sex" id="male" value="male" checked>
-                <label class = "form-check-label" type = for "male">Male</label>
-            </div>
-            <div class="form-check">
-                <input class = "form-check-input" type = "radio" name="sex" id="female" value="female" checked>
-                <label class = "form-check-label" type = for "female">Female</label>
-            </div>
-        </div>
-        <! -- End og gender selection -- >
-        <! -- Text block -- >
-        <div>
-            <label for="Information</label>
-            <textarea class="form-control" id="about" name="about" rows="3"</textarea>
-        </div><br>
-        <! -- End of text block -- >
-        <! -- Checkbox -- >
-        <div>
-            
-        
-        
-        
-        
-            
-        
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-        </body>
-        </html>
-        """
+        return render_template('user_form.html', title='Форма')
     elif request.method == 'POST':
-        print(request.form['fname'])
-        print(request.form['sname'])
-        print(request.form['email'])
-        print(request.form['password"'])
-        return 'The form is sent'
+        myform = request.form.to_dict()
+
+        print(myform)
+        return render_template('filled_form.html',
+                               title='Ваша форма',
+                               data=myform)
+
+
+
+
+@app.route('/load_photo', methods=['GET', 'POST'])
+def load_photo():
+    if request.method == 'GET':
+        return render_template('user_form.html', title= 'Форма')
+
+
+    elif request.method == 'POST':
+        f = request.files['file']
+        # request.files['file'] используем этот метод , но он только если есть ключ,  request.form.get('file') если его нет
+        f.save('./static/images/loaded.png')
+        myform = request.form.to_dict()
+        return render_template('filled_form.html', title='Ваши данные', data=myform)
+
+
+
+
+
 
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
+
+
+
+# GET - запрашивает данные, не меняя состояния сервера
+# POST - отправляет данные на сервер
+# PUT  - заменяет все текущие данные на сервере, данными запроса
+# DELETE - удаляет указанные данные
+# PATCH - частичная замена данных
+
+
+
