@@ -2,18 +2,17 @@ from flask import Flask, url_for, request, redirect
 from flask import render_template
 import json
 
-
 app = Flask(__name__)
 
 
 @app.route('/')  # Это главная страница сайта
 @app.route('/index')
 def index():
-    #- старый метод
-    #user = "Слушатель"
+    # - старый метод
+    # user = "Слушатель"
     # redirect('/load_photo')  безусловный редирект, перекидывает сразу на эту форму
-   # return render_template('index.html', title='Работа с шаблонами',username=user)
-    param= {}
+    # return render_template('index.html', title='Работа с шаблонами',username=user)
+    param = {}
     param['username'] = 'Ученик'
     param['title'] = 'Раширяем шаблоны'
     return render_template('index.html', **param)
@@ -23,18 +22,19 @@ def index():
 def odd_even():
     return render_template('odd_even.html', number=2)
 
+
 @app.route('/news')
 def news():
     with open('news.json', 'rt', encoding='utf-8') as f:
         news_list = json.loads(f.read())
     return render_template('news.html', title='Новости',
-                            news=news_list )
-
+                           news=news_list)
 
 
 @app.route('/var_test')
 def var_test():
-    return  render_template('var_test.html', title='Переменные в HTML')
+    return render_template('var_test.html', title='Переменные в HTML')
+
 
 @app.route('/slogan')
 def slogan():
@@ -46,9 +46,6 @@ def countdown():
     lst = [str(x) for x in range(10, 0, -1)]
     lst.append('Start!!!')
     return '<br>'.join(lst)
-
-
-
 
 
 @app.route('/nekrasov')
@@ -273,12 +270,10 @@ def form_sample():
                                data=myform)
 
 
-
-
 @app.route('/load_photo', methods=['GET', 'POST'])
 def load_photo():
     if request.method == 'GET':
-        return render_template('user_form.html', title= 'Форма')
+        return render_template('user_form.html', title='Форма')
 
 
     elif request.method == 'POST':
@@ -289,21 +284,11 @@ def load_photo():
         return render_template('filled_form.html', title='Ваши данные', data=myform)
 
 
-
-
-
-
-
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
-
-
 
 # GET - запрашивает данные, не меняя состояния сервера
 # POST - отправляет данные на сервер
 # PUT  - заменяет все текущие данные на сервере, данными запроса
 # DELETE - удаляет указанные данные
 # PATCH - частичная замена данных
-
-
-

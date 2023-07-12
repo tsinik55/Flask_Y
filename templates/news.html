@@ -5,13 +5,13 @@
     <title>{{title}}</title>
 </head>
 <body>
-    <dl>
-        {% for item in news['news'] %}
-            <dt><b>{{ item['title'] }}</b></dt>
-            <dd>{{ item['content'] }}</dd>
+<dl>
+    {% for item in news['news'] %}
+    <dt><b>{{ item['title'] }}</b></dt>
+    <dd>{{ item['content'] }}</dd>
 
-        {% endfor %}
-    </dl>
+    {% endfor %}
+</dl>
 </body>
 </html>
 
